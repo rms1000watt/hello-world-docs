@@ -4,16 +4,37 @@
 
 {{ $.Scratch.Set "currentMenuEntry" . }}
 <li>
+  {{ $currentMenuEntry := $.Scratch.Get "currentMenuEntry" }}
+  {{ $isCurrent := eq $.Permalink ($currentMenuEntry.URL | absURL | printf "%s") }}
+  <a {{ if $isCurrent }}class="current"{{ end }} title="{{ $currentMenuEntry.Name }}" href="{{ $currentMenuEntry.URL | relURL}}">
+    {{ $currentMenuEntry.Pre }}
+    {{ $currentMenuEntry.Name }}
+  </a>
+
   {{ if .HasChildren }}
-    <span class="section">{{ .Name | title }}</span>
     <ul>
       {{ range .Children }}
         {{ $.Scratch.Set "currentMenuEntry" . }}
-        {{ partial "nav_link" $currentNode }}
+        {{ $currentMenuEntry := $.Scratch.Get "currentMenuEntry" }}
+        {{ $isCurrent := eq $.Permalink ($currentMenuEntry.URL | absURL | printf "%s") }}
+        <a {{ if $isCurrent }}class="current"{{ end }} title="{{ $currentMenuEntry.Name }}" href="{{ $currentMenuEntry.URL | relURL}}">
+          {{ $currentMenuEntry.Pre }}
+          {{ $currentMenuEntry.Name }}
+        </a>
+
+        {{ if .HasChildren }}
+          {{ range .Children }}
+            {{ $.Scratch.Set "currentMenuEntry" . }}
+            {{ $currentMenuEntry := $.Scratch.Get "currentMenuEntry" }}
+            {{ $isCurrent := eq $.Permalink ($currentMenuEntry.URL | absURL | printf "%s") }}
+            <a {{ if $isCurrent }}class="current"{{ end }} title="{{ $currentMenuEntry.Name }}" href="{{ $currentMenuEntry.URL | relURL}}">
+              {{ $currentMenuEntry.Pre }}
+              {{ $currentMenuEntry.Name }}
+            </a>
+          {{ end }}
+        {{ end }}
       {{ end }}
     </ul>
-  {{ else }}
-    {{ partial "nav_link" $currentNode }}
   {{ end }}
 </li>
 {{ end }}

@@ -72,10 +72,23 @@ googleAnalytics = ""
 	weight = 40
 
 [[menu.main]]
-	name   = "Android"
-	url    = "android/"
-	parent = "getting-started"
-	weight = 50
+	name       = "Android"
+	url        = "android/"
+	parent     = "getting-started"
+	identifier = "android"
+	weight     = 50
+
+[[menu.main]]
+	name       = "Lollipop"
+	url        = "lollipop/"
+	parent     = "android"
+	weight     = 60
+
+[[menu.main]]
+	name       = "Froyo"
+	url        = "froyo/"
+	parent     = "android"
+	weight     = 61
 
 [blackfriday]
 	smartypants	= true
